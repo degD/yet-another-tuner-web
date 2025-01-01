@@ -16,7 +16,7 @@ body {
 
 .bar {
     background-color: red;
-    margin: 20px;
+    margin: 0 20px;
 }
 
 .edge-bar {
@@ -76,4 +76,5 @@ body {
 .chord {
     text-align: center;
     white-space: pre;
+    font-size: 24px;
 }
