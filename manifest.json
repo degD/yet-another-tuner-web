@@ -1,4 +1,11 @@
 {
+  "icons": [
+    {
+      "src": "icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ],
   "name": "YAT: Yet Another Tuner",
   "theme_color": "#000000",
   "background_color": "#000000",
