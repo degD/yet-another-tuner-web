@@ -1,3 +1,4 @@
+import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
@@ -57,6 +58,33 @@ function useDarkTheme() {
         "cursor": "#f2630a"
     });
 }
+
+function updatePitch(analyserNode, detector, input, sampleRate) {
+    console.log(sampleRate);
+    analyserNode.getFloatTimeDomainData(input);
+    const [pitch, clarity] = detector.findPitch(input, sampleRate);
+    
+    // Update something to display pitch etc...
+    console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
+    
+    window.setTimeout(
+        () => updatePitch(analyserNode, detector, input, sampleRate),
+        100
+    );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const audioContext = new window.AudioContext();
+    const analyserNode = audioContext.createAnalyser();
+
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        audioContext.createMediaStreamSource(stream).connect(analyserNode);
+        const detector = PitchDetector.forFloat32Array(analyserNode.fftSize);
+        detector.minVolumeDecibels = -10;
+        const input = new Float32Array(detector.inputLength);
+        updatePitch(analyserNode, detector, input, audioContext.sampleRate);
+    });
+});
 
 /* Main */
 useDarkTheme();
