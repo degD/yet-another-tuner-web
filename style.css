@@ -1,0 +1,79 @@
+body {
+    background-color: grey;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bars-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bar {
+    background-color: red;
+    margin: 20px;
+}
+
+.edge-bar {
+    width: 10px;
+    height: 140px;
+}
+
+.middle-bar {
+    width: 16px;
+    height: 200px;
+}
+
+.horizontal-line-container {
+    position: absolute;
+    top: 0px;
+    z-index: 100;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.horizontal-line {
+    background-color: red;
+    z-index: 100;
+    width: 100%;
+    height: 4px;
+}
+
+.cursor-container {
+    position: absolute;
+    top: 0px;
+    z-index: 100;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cursor {
+    background-color: yellow;
+    z-index: 120;
+    width: 30px;
+    height: 60px;
+}
+
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chord {
+    text-align: center;
+    white-space: pre;
+}
