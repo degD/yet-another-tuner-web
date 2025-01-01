@@ -6,6 +6,7 @@
       "type": "image/jpg"
     }
   ],
+  "start_url": "index.html",
   "name": "YAT: Yet Another Tuner",
   "theme_color": "#000000",
   "background_color": "#000000",
