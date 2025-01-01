@@ -2,6 +2,8 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
+var clarityThreshold = 0.5;
+var pitchCalculated;
 
 /**
  * Move the cursor from left bar (0) to right bar (100). 
@@ -65,8 +67,11 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
     const [pitch, clarity] = detector.findPitch(input, sampleRate);
     
     // Update something to display pitch etc...
-    console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
-    
+    if (clarity > clarityThreshold) {
+        document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
+        console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
+    }
+
     window.setTimeout(
         () => updatePitch(analyserNode, detector, input, sampleRate),
         100
@@ -88,10 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* Main */
 useDarkTheme();
-setInterval(() => {
-    let c = cursorIndex;
-    c = c + cursorDirection;
-    setCursor(c);
-    if (c > 100) cursorDirection = -1;
-    if (c < 0) cursorDirection = 1;
-}, 10); // To test cursor movement...
+// setInterval(() => {
+//     let c = cursorIndex;
+//     c = c + cursorDirection;
+//     setCursor(c);
+//     if (c > 100) cursorDirection = -1;
+//     if (c < 0) cursorDirection = 1;
+// }, 10); // To test cursor movement...
