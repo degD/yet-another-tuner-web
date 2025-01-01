@@ -2,7 +2,7 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
-var clarityThreshold = 0.8;
+var clarityThreshold = 0.7;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 
 /**
@@ -85,11 +85,16 @@ function findChord(freq) {
     let referenceOctave = 4;
 
     let semitones = Math.round(12 * Math.log(freq / referenceFreq) / Math.LN2);
-    let chords = getChords(referenceIndex + semitones);
-    let octave = getOctave(referenceIndex + semitones, referenceOctave);
+    let index = referenceIndex + semitones;
+    let chords = getChords(index);
+    let octave = getOctave(index, referenceOctave);
 
-    console.log(semitones, referenceIndex);
-    return {"chords": chords, "octave": octave};
+    let freqL = Math.pow(2, ((semitones-1) / 12)) * referenceFreq;
+    let freqR = Math.pow(2, ((semitones+1) / 12)) * referenceFreq;
+
+    console.log("s:", semitones);
+    console.log(freqL, freqR);
+    return {"chords": chords, "octave": octave, "fL": freqL, "fR": freqR};
 }
 
 function updatePitch(analyserNode, detector, input, sampleRate) {
@@ -98,20 +103,22 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
     
     // Update something to display pitch etc...
     if (clarity > clarityThreshold) {
-        let {chords, octave} = findChord(pitch);
+        let {chords, octave, fL, fR} = findChord(pitch);
         console.log(chords);
         document.querySelector(".left-chord").textContent = chords["l"];
         document.querySelector(".middle-chord").textContent = chords["m"];
         document.querySelector(".right-chord").textContent = chords["r"];
-
         document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
+
+        let newCursorIndex = 100 * (pitch - fL) / (fR - fL);
+        setCursor(newCursorIndex);
 
         console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
     }
 
     window.setTimeout(
         () => updatePitch(analyserNode, detector, input, sampleRate),
-        100
+        50
     );
 }
 
@@ -122,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         audioContext.createMediaStreamSource(stream).connect(analyserNode);
         const detector = PitchDetector.forFloat32Array(analyserNode.fftSize);
-        detector.minVolumeDecibels = -10;
+        detector.minVolumeDecibels = -12;
         const input = new Float32Array(detector.inputLength);
         updatePitch(analyserNode, detector, input, audioContext.sampleRate);
     });
