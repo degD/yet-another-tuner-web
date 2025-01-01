@@ -2,8 +2,8 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
-var clarityThreshold = 0.5;
-var pitchCalculated;
+var clarityThreshold = 0.8;
+var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 
 /**
  * Move the cursor from left bar (0) to right bar (100). 
@@ -61,14 +61,51 @@ function useDarkTheme() {
     });
 }
 
+function getChords(i) {
+    console.log(i);
+    return {
+        "l": notes.at((i-1) % notes.length), 
+        "m": notes.at(i % notes.length), 
+        "r": notes.at((i+1) % notes.length)
+    };
+}
+
+function getChordIndex(chord) {
+    return notes.indexOf(chord);
+}
+
+function getOctave(i, refOctave) {
+    return refOctave + Math.floor(i / notes.length);
+}
+
+function findChord(freq) {
+    let referenceFreq = 440; // frequency of A4
+    let referenceNote = "a";
+    let referenceIndex = getChordIndex(referenceNote);
+    let referenceOctave = 4;
+
+    let semitones = Math.round(12 * Math.log(freq / referenceFreq) / Math.LN2);
+    let chords = getChords(referenceIndex + semitones);
+    let octave = getOctave(referenceIndex + semitones, referenceOctave);
+
+    console.log(semitones, referenceIndex);
+    return {"chords": chords, "octave": octave};
+}
+
 function updatePitch(analyserNode, detector, input, sampleRate) {
-    console.log(sampleRate);
     analyserNode.getFloatTimeDomainData(input);
     const [pitch, clarity] = detector.findPitch(input, sampleRate);
     
     // Update something to display pitch etc...
     if (clarity > clarityThreshold) {
+        let {chords, octave} = findChord(pitch);
+        console.log(chords);
+        document.querySelector(".left-chord").textContent = chords["l"];
+        document.querySelector(".middle-chord").textContent = chords["m"];
+        document.querySelector(".right-chord").textContent = chords["r"];
+
         document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
+
         console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
     }
 
