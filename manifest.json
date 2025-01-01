@@ -1,0 +1,9 @@
+{
+  "icon": "icon.jpeg",
+  "name": "YAT: Yet Another Tuner",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "short_name": "YAT",
+  "id": "yet_another_tuner_332211",
+  "description": "Simple tuner app written for web, with dark/light theme support."
+}
