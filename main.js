@@ -114,9 +114,9 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
     if (clarity > clarityThreshold) {
         let {chords, octave, fL, fR} = findChord(pitch);
         console.log(chords);
-        document.querySelector(".left-chord").textContent = chords["l"];
-        document.querySelector(".middle-chord").textContent = chords["m"];
-        document.querySelector(".right-chord").textContent = chords["r"];
+        document.querySelector(".left-chord").textContent = chords["l"].toUpperCase();
+        document.querySelector(".middle-chord").textContent = chords["m"].toUpperCase();
+        document.querySelector(".right-chord").textContent = chords["r"].toUpperCase();
         document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
 
         let newCursorIndex = 100 * (pitch - fL) / (fR - fL);
