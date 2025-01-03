@@ -144,6 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+window.onresize = () => {
+    console.log(cursorIndex);
+    setCursor(cursorIndex);
+};
+
 document.querySelector(".theme-change").addEventListener("click", () => {
     console.log("Oh no!")
     darkTheme = !darkTheme;
