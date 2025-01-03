@@ -105,3 +105,12 @@ body {
     width: 10%;
     height: 150px;
 }
+
+.theme-change {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 200;
+}

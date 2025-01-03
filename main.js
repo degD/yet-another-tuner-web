@@ -4,6 +4,7 @@ var cursorIndex = 0;
 var cursorDirection = 1;
 var clarityThreshold = 0.9;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
+var darkTheme = true;
 
 /**
  * Move the cursor from left bar (0) to right bar (100). 
@@ -47,6 +48,8 @@ function useColors(colors) {
     document.querySelector(".green-field")
     .style["background-color"] = colors["green"];
 
+    document.querySelector("svg")
+    .style["fill"] = colors["bar"];
 }
 
 function useLightTheme() {
@@ -54,7 +57,7 @@ function useLightTheme() {
         "bar": "#000000",
         "screen": "#ececec",
         "cursor": "#f2630a",
-        "green": "#008800"
+        "green": "#59de59"
     });
 }
 
@@ -140,6 +143,16 @@ document.addEventListener("DOMContentLoaded", () => {
         updatePitch(analyserNode, detector, input, audioContext.sampleRate);
     });
 });
+
+document.querySelector(".theme-change").addEventListener("click", () => {
+    console.log("Oh no!")
+    darkTheme = !darkTheme;
+    if (darkTheme) {
+        useDarkTheme();
+    } else {
+        useLightTheme();
+    }
+})
 
 /* Main */
 useDarkTheme();
