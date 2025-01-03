@@ -43,13 +43,18 @@ function useColors(colors) {
 
     document.querySelector(".cursor")
     .style["background-color"] = colors["cursor"];
+
+    document.querySelector(".green-field")
+    .style["background-color"] = colors["green"];
+
 }
 
 function useLightTheme() {
     useColors({
         "bar": "#000000",
         "screen": "#ececec",
-        "cursor": "#f2630a"
+        "cursor": "#f2630a",
+        "green": "#008800"
     });
 }
 
@@ -57,7 +62,8 @@ function useDarkTheme() {
     useColors({
         "bar": "#d2d2d2",
         "screen": "#1a1a1a",
-        "cursor": "#f2630a"
+        "cursor": "#f2630a",
+        "green": "#008800"
     });
 }
 

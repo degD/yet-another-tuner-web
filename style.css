@@ -30,6 +30,12 @@ body {
     margin: 0 120px;
 }
 
+.middle-bar-container {
+    z-index: 10;
+    height: 200px;
+    background-color: green;
+}
+
 .horizontal-line-container {
     position: absolute;
     top: 0px;
@@ -78,4 +84,24 @@ body {
     text-align: center;
     white-space: pre;
     font-size: 24px;
+}
+
+.green-field-container {
+    position: absolute;
+    top: 0px;
+    z-index: -100;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-field {
+    background-color: green;
+    z-index: -100;
+    width: 10%;
+    height: 150px;
 }
