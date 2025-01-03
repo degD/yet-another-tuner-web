@@ -2,7 +2,7 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
-var clarityThreshold = 0.7;
+var clarityThreshold = 0.9;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 
 /**
