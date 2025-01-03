@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         audioContext.createMediaStreamSource(stream).connect(analyserNode);
         const detector = PitchDetector.forFloat32Array(analyserNode.fftSize);
-        detector.minVolumeDecibels = -12;
+        detector.minVolumeDecibels = -10;
         const input = new Float32Array(detector.inputLength);
         updatePitch(analyserNode, detector, input, audioContext.sampleRate);
     });
