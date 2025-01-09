@@ -157,7 +157,9 @@ document.querySelector(".theme-change").addEventListener("click", () => {
     } else {
         useLightTheme();
     }
-})
+});
+
+// TODO: If in green-field for ~1sn glow and play sound.
 
 /* Main */
 useDarkTheme();
