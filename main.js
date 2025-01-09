@@ -2,7 +2,7 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
-var clarityThreshold = 0.9;
+var clarityThreshold = 0.95;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 var darkTheme = true;
 
@@ -101,9 +101,12 @@ function findChord(freq) {
     let freqL = Math.pow(2, ((semitones-1) / 12)) * referenceFreq;
     let freqR = Math.pow(2, ((semitones+1) / 12)) * referenceFreq;
 
+    let octaveLeft = chords["l"] === "b" ? octave-1 : octave;
+    let octaveRight = chords["r"] === "c" ? octave+1 : octave;
+
     console.log("s:", semitones);
     console.log(freqL, freqR);
-    return {"chords": chords, "octave": octave, "fL": freqL, "fR": freqR};
+    return {"chords": chords, "octave": octave, "fL": freqL, "fR": freqR, "oL": octaveLeft, "oR": octaveRight};
 }
 
 function updatePitch(analyserNode, detector, input, sampleRate) {
@@ -112,11 +115,11 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
     
     // Update something to display pitch etc...
     if (clarity > clarityThreshold) {
-        let {chords, octave, fL, fR} = findChord(pitch);
+        let {chords, octave, fL, fR, oL, oR} = findChord(pitch);
         console.log(chords);
-        document.querySelector(".left-chord").textContent = chords["l"].toUpperCase();
-        document.querySelector(".middle-chord").textContent = chords["m"].toUpperCase();
-        document.querySelector(".right-chord").textContent = chords["r"].toUpperCase();
+        document.querySelector(".left-chord").innerHTML = `<div>${chords["l"].toUpperCase()}<sub>${oL}</sub></div>`;
+        document.querySelector(".middle-chord").innerHTML = `<div>${chords["m"].toUpperCase()}<sub>${octave}</sub></div>`;
+        document.querySelector(".right-chord").innerHTML = `<div>${chords["r"].toUpperCase()}<sub>${oR}</sub></div>`;
         document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
 
         let newCursorIndex = 100 * (pitch - fL) / (fR - fL);
