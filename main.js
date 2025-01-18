@@ -2,9 +2,10 @@ import { PitchDetector } from "https://esm.sh/pitchy@4";
 
 var cursorIndex = 0;
 var cursorDirection = 1;
-var clarityThreshold = 0.95;
+var clarityThreshold = 0.80;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 var darkTheme = true;
+var array = []
 
 /**
  * Move the cursor from left bar (0) to right bar (100). 
@@ -126,11 +127,13 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
         setCursor(newCursorIndex);
 
         console.log(`pitch: ${Math.round(pitch * 10) / 10}Hz, clarity: ${Math.round(clarity * 100)}`);
+        array.push(pitch)
+        console.log(array)
     }
 
     window.setTimeout(
         () => updatePitch(analyserNode, detector, input, sampleRate),
-        50
+        20
     );
 }
 
@@ -161,6 +164,28 @@ document.querySelector(".theme-change").addEventListener("click", () => {
         useLightTheme();
     }
 });
+
+// Play a tone when cursor stays in the green field for 2 seconds
+let enteredGreen = false;
+let enteredGreenTime = Date.now();
+const tonePath = "";
+const toneAudioElement = new Audio(tonePath);
+setInterval(() => {
+    if (enteredGreen == false && Math.abs(cursorIndex - 50) <= 5) {
+        enteredGreen = true;
+        enteredGreenTime = Date.now();
+    } else if (enteredGreen) {
+        if ((Date.now() - enteredGreenTime) > 2000) {
+            console.log("It has been 2 seconds!");
+            toneAudioElement.play();
+        }
+    } else {
+        enteredGreen = false;
+    }
+    console.log(enteredGreen, enteredGreenTime);
+}, 100);
+
+
 
 // TODO: If in green-field for ~1sn glow and play sound.
 
