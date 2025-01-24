@@ -1,5 +1,5 @@
 body {
-    background-color: grey;
+    background-color: #1a1a1a;
     height: 100vh;
     margin: 0;
     display: flex;
@@ -17,7 +17,7 @@ body {
 }
 
 .bar {
-    background-color: red;
+    background-color: #d2d2d2;
     margin: 0 20px;
 }
 
@@ -35,7 +35,7 @@ body {
 .middle-bar-container {
     z-index: 10;
     height: 200px;
-    background-color: green;
+    /* background-color: #008800; */
 }
 
 .horizontal-line-container {
@@ -52,7 +52,7 @@ body {
 }
 
 .horizontal-line {
-    background-color: red;
+    background-color: #d2d2d2;
     z-index: 100;
     width: 100%;
     height: 4px;
@@ -72,7 +72,7 @@ body {
 }
 
 .cursor {
-    background-color: yellow;
+    background-color: #f2630a;
     z-index: 120;
     width: 10px;
     height: 60px;
@@ -88,6 +88,7 @@ body {
     text-align: center;
     white-space: pre;
     font-size: 24px;
+    color: #d2d2d2;
 }
 
 .green-field-container {
@@ -105,7 +106,7 @@ body {
 }
 
 .green-field {
-    background-color: green;
+    background-color: #008800;
     z-index: -100;
     width: 10%;
     height: 150px;
@@ -118,4 +119,8 @@ body {
     right: 10px;
     top: 10px;
     z-index: 200;
+}
+
+svg {
+    fill: #d2d2d2
 }

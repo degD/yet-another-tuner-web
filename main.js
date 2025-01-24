@@ -199,7 +199,7 @@ setInterval(() => {
 
 
 /* Main */
-useDarkTheme();
+// useDarkTheme();
 // setInterval(() => {
 //     let c = cursorIndex;
 //     c = c + cursorDirection;
