@@ -168,7 +168,7 @@ document.querySelector(".theme-change").addEventListener("click", () => {
 // Play a tone when cursor stays in the green field for 2 seconds
 let enteredGreen = false;
 let enteredGreenTime = Date.now();
-const tonePath = "";
+const tonePath = "audio.wav";
 const toneAudioElement = new Audio(tonePath);
 setInterval(() => {
     if (enteredGreen == false && Math.abs(cursorIndex - 50) <= 5) {
