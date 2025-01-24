@@ -168,26 +168,27 @@ document.querySelector(".theme-change").addEventListener("click", () => {
 // Play a tone when cursor stays in the green field for 2 seconds
 let enteredGreen = false;
 let enteredGreenTime = Date.now();
+let tonePlayed = false;
 const tonePath = "audio.wav";
 const toneAudioElement = new Audio(tonePath);
 setInterval(() => {
-    if (enteredGreen == false && Math.abs(cursorIndex - 50) <= 5) {
-        enteredGreen = true;
-        enteredGreenTime = Date.now();
-    } else if (enteredGreen) {
-        if ((Date.now() - enteredGreenTime) > 2000) {
-            console.log("It has been 2 seconds!");
+    if (Math.abs(cursorIndex - 50) <= 2) {
+        if (enteredGreen == false) {
+            enteredGreen = true;
+            enteredGreenTime = Date.now();
+        } else if ((Date.now() - enteredGreenTime) > 2000  && !tonePlayed) {
             toneAudioElement.play();
+            tonePlayed = true;
+            document.querySelector(".green-field").style["filter"] = "brightness(2)";
+            setTimeout(() => document.querySelector(".green-field").style["filter"] = "brightness(1)", 2000);
         }
     } else {
         enteredGreen = false;
+        tonePlayed = false;
     }
     console.log(enteredGreen, enteredGreenTime);
 }, 100);
 
-
-
-// TODO: If in green-field for ~1sn glow and play sound.
 
 /* Main */
 useDarkTheme();
