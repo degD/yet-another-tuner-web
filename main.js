@@ -6,6 +6,7 @@ var clarityThreshold = 0.80;
 var notes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"];
 var darkTheme = true;
 var array = []
+var cursorLock = false;
 
 /**
  * Move the cursor from left bar (0) to right bar (100). 
@@ -24,7 +25,9 @@ function setCursor(i) {
     if (i < 0) i = 0;
 
     let newCursorX = i * (rightEnd - leftEnd) / 100 + leftEnd;
-    document.querySelector(".cursor").style["margin-left"] = `${newCursorX - cursorWidth/2}px`;
+    if (!cursorLock) {
+        document.querySelector(".cursor").style["margin-left"] = `${newCursorX - cursorWidth/2}px`;
+    }
     cursorIndex = i;
 }
 
@@ -118,11 +121,14 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
     if (clarity > clarityThreshold) {
         let {chords, octave, fL, fR, oL, oR} = findChord(pitch);
         console.log(chords);
-        document.querySelector(".left-chord").innerHTML = `<div>${chords["l"].toUpperCase()}<sub>${oL}</sub></div>`;
-        document.querySelector(".middle-chord").innerHTML = `<div>${chords["m"].toUpperCase()}<sub>${octave}</sub></div>`;
-        document.querySelector(".right-chord").innerHTML = `<div>${chords["r"].toUpperCase()}<sub>${oR}</sub></div>`;
-        document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
 
+        if (!cursorLock) {
+            document.querySelector(".left-chord").innerHTML = `<div>${chords["l"].toUpperCase()}<sub>${oL}</sub></div>`;
+            document.querySelector(".middle-chord").innerHTML = `<div>${chords["m"].toUpperCase()}<sub>${octave}</sub></div>`;
+            document.querySelector(".right-chord").innerHTML = `<div>${chords["r"].toUpperCase()}<sub>${oR}</sub></div>`;
+            document.querySelector(".freq").textContent = `${Math.round(pitch * 10) / 10}Hz`;
+        }
+        
         let newCursorIndex = 100 * (pitch - fL) / (fR - fL);
         setCursor(newCursorIndex);
 
@@ -177,6 +183,7 @@ setInterval(() => {
             enteredGreen = true;
             enteredGreenTime = Date.now();
         } else if ((Date.now() - enteredGreenTime) > 2000  && !tonePlayed) {
+            cursorLock = true;
             toneAudioElement.play();
             tonePlayed = true;
             document.querySelector(".green-field").style["filter"] = "brightness(2)";
@@ -185,6 +192,7 @@ setInterval(() => {
     } else {
         enteredGreen = false;
         tonePlayed = false;
+        toneAudioElement.addEventListener("ended", () => cursorLock = false);
     }
     console.log(enteredGreen, enteredGreenTime);
 }, 100);
