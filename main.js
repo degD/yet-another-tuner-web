@@ -52,8 +52,8 @@ function useColors(colors) {
     document.querySelector(".green-field")
     .style["background-color"] = colors["green"];
 
-    document.querySelector("svg")
-    .style["fill"] = colors["bar"];
+    document.querySelectorAll("svg").forEach(
+        e => e.style["fill"] = colors["bar"]);
 }
 
 function useLightTheme() {
@@ -146,6 +146,11 @@ function updatePitch(analyserNode, detector, input, sampleRate) {
 document.addEventListener("DOMContentLoaded", () => {
     const audioContext = new window.AudioContext();
     const analyserNode = audioContext.createAnalyser();
+
+    document.querySelector(".mic-button").addEventListener("click", () => {
+        audioContext.resume();
+        console.log("Recording started...");
+    });
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         audioContext.createMediaStreamSource(stream).connect(analyserNode);
