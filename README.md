@@ -1,5 +1,9 @@
 # YAT: YET ANOTHER TUNER
 
+## Update: 
+At the end, I couldn't find a relaible way to turn the PWA into a standalone Android app. Lack of documentation, need for an online server, 
+and require of microphone access made me rethink my approach. I will rewrite the whole project in native in the future.
+
 ## Disclaimer: 
 This is a personal project with the intend to learn how to build a Progressive Web App (PWA) and distribute it among different platforms.
 It is not made as an end-user product, and it may contain bugs. Pitch detection is not very reliable as well. I will try to implement a 
@@ -16,4 +20,5 @@ In this project, node package [pitchy](https://www.npmjs.com/package/pitchy) has
 has used for building the project. [Favicon Generator](https://favicon.io/favicon-generator/) also used to generate simple icons and favicons.
 
 ## How to run?
-Just head to the [GitHub Pages](https://degd.github.io/yet-another-tuner-web/) or download the builded PWA from the releases tab.
+Just head to the project [GitHub Pages](https://degd.github.io/yet-another-tuner-web/). Because of the microphone access, I failed to turn this project
+into a standalone Android app.
