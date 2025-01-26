@@ -13,5 +13,10 @@
   "short_name": "YAT",
   "id": "yet_another_tuner_332211",
   "description": "Simple tuner app written for web, with dark/light theme support.",
-  "display": "standalone"
+  "display": "standalone",
+  "lang": "en",
+  "orientation": "portrait",
+  "categories": ["music", "games"],
+  "launch_handler": "navigate-new",
+  "handle_links": "not-preferred"
 }
